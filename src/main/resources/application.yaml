@@ -1,3 +1,18 @@
 spring:
   application:
     name: secureauth
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/secureauth
+    username: madan
+    password: madan
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 8080
