@@ -1,13 +1,16 @@
 package com.secureauth.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Entity
 @Table(name = "user_roles")
-@Data
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserRole {
     @Id
     @GeneratedValue
@@ -20,4 +23,10 @@ public class UserRole {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
+
+    // constructor
+    public UserRole(User user, Role role) {
+        this.user = user;
+        this.role = role;
+    }
 }
