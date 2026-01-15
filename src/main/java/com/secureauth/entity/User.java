@@ -3,6 +3,7 @@ package com.secureauth.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Date;
 import java.time.Instant;
 import java.util.Set;
 import java.util.UUID;
@@ -35,11 +36,17 @@ public class User {
 
     private Instant createdAt = Instant.now();
 
+    private String name;
+
+    private Date birthday;
+
     // constructor: create user
-    public User(String username, String email, String passwordHash) {
+    public User(String username, String email, String passwordHash, String name, Date birthday) {
         this.username = username;
         this.email = email;
         this.passwordHash = passwordHash;
         this.failedAttempts = 0;
+        this.name = name;
+        this.birthday = birthday;
     }
 }
