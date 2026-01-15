@@ -23,6 +23,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import static com.secureauth.util.Constant.ROLE_USER;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -63,14 +64,14 @@ class UserServiceImplTest {
                 .thenReturn(savedUser);
 
         Role role = new Role();
-        role.setName(Constant.ROLE_USER);
-        when(roleRepository.findByName(Constant.ROLE_USER)).thenReturn(Optional.of(role));
+        role.setName(ROLE_USER);
+        when(roleRepository.findByName(ROLE_USER)).thenReturn(Optional.of(role));
 
         RegisterResponse response = userService.register(registerRequest);
         assertNotNull(response);
         assertEquals(userId, response.getUserId());
         assertEquals("madan", response.getUsername());
-        assertEquals(Set.of(Constant.ROLE_USER), response.getRoles());
+        assertEquals(Set.of(ROLE_USER), response.getRoles());
 
         verify(userRepository).save(any(User.class));
         verify(userRoleRepository).save(any(UserRole.class));
@@ -95,7 +96,7 @@ class UserServiceImplTest {
                 "hashed-password"
         ));
 
-        when(roleRepository.findByName(Constant.ROLE_USER)).thenReturn(Optional.empty());
+        when(roleRepository.findByName(ROLE_USER)).thenReturn(Optional.empty());
         assertThrows(RoleNotFoundException.class, () -> userService.register(registerRequest));
         verify(userRoleRepository, never()).save(any());
     }
@@ -117,9 +118,9 @@ class UserServiceImplTest {
         when(userRepository.save(userCaptor.capture())).thenAnswer(invocation -> invocation.getArgument(0));
 
         Role role = new Role();
-        role.setName(Constant.ROLE_USER);
+        role.setName(ROLE_USER);
 
-        when(roleRepository.findByName(Constant.ROLE_USER)).thenReturn(Optional.of(role));
+        when(roleRepository.findByName(ROLE_USER)).thenReturn(Optional.of(role));
 
         userService.register(registerRequest);
         User savedUser = userCaptor.getValue();
